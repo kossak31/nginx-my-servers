@@ -1,0 +1,26 @@
+server {
+
+    listen 80;
+    server_name 79.168.14.28 barata.pt;
+
+    root /var/www/barata/public_html;
+    index index.html index.php;
+
+    error_log  /tmp/error.log;
+    access_log  /tmp/access.log;
+
+   #block add MIME no header
+   add_header X-Content-Type-Options nosniff;
+
+
+  location / {
+    try_files $uri $uri/ /index.php;
+  }
+
+
+  location ~* \.php$ {
+   include snippets/fastcgi-php.conf;
+   fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+  }
+
+}
